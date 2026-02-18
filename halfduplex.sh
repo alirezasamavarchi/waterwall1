@@ -72,7 +72,7 @@ download_and_unzip() {
 
 # Get latest release URL
 get_latest_release_url() {
-  local api_url="https://api.github.com/repos/radkesvat/WaterWall/releases/latest"
+  local api_url="https://api.github.com/repos/alirezasamavarchi/WaterWall/releases/latest"
   local response=$(curl -s "$api_url")
   if [ $? -ne 0 ] || [ -z "$response" ]; then return 1; fi
   local asset_url=$(echo "$response" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
@@ -83,7 +83,7 @@ get_latest_release_url() {
 # Get specific version URL
 get_specific_release_url() {
   local version=$1
-  local api_url="https://api.github.com/repos/radkesvat/WaterWall/releases/tags/$version"
+  local api_url="https://api.github.com/repos/alirezasamavarchi/WaterWall/releases/tags/$version"
   local response=$(curl -s "$api_url")
   if [ $? -ne 0 ] || [ -z "$response" ]; then return 1; fi
   local asset_url=$(echo "$response" | jq -r ".assets[] | select(.name == \"$ASSET_NAME\") | .browser_download_url")
@@ -172,7 +172,7 @@ while true; do
       url=$(get_latest_release_url)
       if [ $? -ne 0 ] || [ -z "$url" ]; then
         fallback="Waterwall-linux-clang-x64.zip"
-        url=$(curl -s "https://api.github.com/repos/radkesvat/WaterWall/releases/latest" | jq -r ".assets[] | select(.name == \"$fallback\") | .browser_download_url")
+        url=$(curl -s "https://api.github.com/repos/alirezasamavarchi/WaterWall/releases/latest" | jq -r ".assets[] | select(.name == \"$fallback\") | .browser_download_url")
         if [ -z "$url" ] || [ "$url" == "null" ]; then
           echo -e "${RED}Failed to find asset.${NC}"
           exit 1
